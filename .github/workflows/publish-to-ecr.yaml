@@ -49,12 +49,7 @@ jobs:
 
       - name: Run Wiz CLI image scan
         id: scan
-        run: |
-    if [ -z "${ODLUSER}" ]; then
-      echo "Error: ODLUSER environment variable is not set."
-      exit 1
-    fi
-    ./wizcli docker scan -i $REGISTRY/$REPOSITORY:${COMMIT_SHA} --policy ${ODLUSER}-vuln-block
+        run: ./wizcli docker scan -i $REGISTRY/$REPOSITORY:${COMMIT_SHA} --policy ${ODLUSER}-vuln-block
         continue-on-error: false
         env:
           REGISTRY: ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.us-east-1.amazonaws.com
@@ -115,3 +110,4 @@ jobs:
         run: |
           IMAGE_URI=$ACCOUNT_ID.dkr.ecr.us-east-1.amazonaws.com/$REPOSITORY:$COMMIT_SHA
           ./wizcli docker tag -i $IMAGE_URI
+          
